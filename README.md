@@ -50,8 +50,8 @@ OK SO THIS IS A CHAT APP THAT I CREATED... I WILL EXPLAIN IT AS FOLLOWING STEPS.
   in front end the socket sends and receives message like this !!!
 
 
-  when users is render inside render user func ,,a bth is there that calls open chat  func ,,where the email and name of the person whose chat we click'
-  gets passed ,,then the open chat pass that to load users and shit ,,, now that we have chat target lets say user2 is pressed by user 1 so chat target is user2 for user 1 ,, 
+  when users is render inside render user func ,,a btn is there that calls open chat  func ,,where the email and name of the person whose chat we click'
+  gets passed ,,then the open chat pass that to load users and  ,,, now that we have chat target lets say user2 is pressed by user 1 so chat target is user2 for user 1 ,, 
   we dont have stm of sending msg using websocket when B isnt opening the chat of A at the same time ,,, that task is done by loading db,,, so dont get confused  ,,
   so this means socket is active only when both open each other's chat and A chattarget is B and vice versa ,, so when A decide to send msg to B ,,for B ,A is the chattarget for B as B is 
   opening A's chat also A sends the msg ,, it calls sendMsg of frontend where socket.user is A ,,from that the send msg is emmitted to server ,,where email=socket.user.email that is A's email,,
