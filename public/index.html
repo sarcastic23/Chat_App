@@ -190,7 +190,7 @@
     if (!email || !password) { setMsg('login-msg', 'fill in all fields'); return; }
 
     // TODO: uncomment and remove the demo block below
-    const res = await fetch('http://localhost:3000/login', {
+    const res = await fetch('/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -200,7 +200,7 @@
     token = data.message;  // your backend returns { message: token }
     myEmail = email;
 
-    socket = io('http://localhost:3000', {
+    socket = io( {
       auth: { token: token }
     });
 
@@ -238,7 +238,7 @@
     if (!name || !email || !password) { setMsg('reg-msg', 'fill in all fields'); return; }
 
     // TODO: uncomment below
-    const res = await fetch('http://localhost:3000/register', {
+    const res = await fetch('/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password })
@@ -267,7 +267,7 @@
  
   async function loadUsers() {
     
-    const res = await fetch('http://localhost:3000/users', {
+    const res = await fetch('/users', {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const data = await res.json();
@@ -310,7 +310,7 @@
   }
  
   async function loadMessages(email) {
-  const res = await fetch(`http://localhost:3000/msg/${email}`, {
+  const res = await fetch(`/msg/${email}`, {
     headers: { 'Authorization': 'Bearer ' + token }
   });
   const data = await res.json();
@@ -349,7 +349,7 @@
   // ─── INBOX ────────────────────────────────────────────────────
   async function loadInbox() {
     // TODO: uncomment below
-    const res = await fetch('http://localhost:3000/msg', {
+    const res = await fetch('/msg', {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const data = await res.json();
