@@ -257,12 +257,13 @@
     showView('users');
   }
  
-  function logout() {
-    token = null; myEmail = null; chatTarget = null;
-    document.getElementById('nav').style.display = 'none';
-    document.getElementById('user-tag').style.display = 'none';
-    showView('login');
-  }
+function logout() {
+  if (socket) socket.disconnect();
+  token = null; myEmail = null; chatTarget = null;
+  document.getElementById('nav').style.display = 'none';
+  document.getElementById('user-tag').style.display = 'none';
+  showView('login');
+}
   // ─── USERS ────────────────────────────────────────────────────
  
   async function loadUsers() {
