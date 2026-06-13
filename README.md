@@ -10,8 +10,8 @@ OK SO THIS IS A CHAT APP THAT I CREATED... I WILL EXPLAIN IT AS FOLLOWING STEPS.
 
 ## HOW YOU CAN USE THIS APP??
   using this app is pretty straightforward ,,i will be deploying this so u can just click on this link 
-  here ................... then u can either login or register , if u dont wana register and see how does this work 
-  i have demo accs they are {email:son@gmail.com ,pass :john1234} and {email:nahbro@gmail.com,pass:okk} ,, i have chated using these accs
+  here https://chat-app-2ujp.onrender.com then u can either login or register , if u dont wana register and see how does this work 
+  i have demo accs they are {email:son@gmail.com ,pass :okk} and {email:nahbro@gmail.com,pass:okk} ,, i have chated using these accs
   so there will initially be msges ,, u can message using these accs or register....
 
   when u login u can see all the register ,,u can see all the registred users when u login and message any registred user ,, I didnt added 
