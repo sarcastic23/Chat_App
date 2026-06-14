@@ -132,24 +132,29 @@
   </div>
 
   <!-- CHAT -->
-  <div id="view-chat" class="view">
-    <div class="chat-header">
-      <button class="back-btn" onclick="showView('users')">← back</button>
-      <div class="avatar" id="chat-avatar">?</div>
-      <div>
-        <div class="uname" id="chat-name">-</div>
-        <div class="uemail" id="chat-email-label">-</div>
+<div id="view-chat" class="view">
+  <div class="chat-header">
+    <button class="back-btn" onclick="showView('users')">← back</button>
+    <div class="avatar" id="chat-avatar">?</div>
+    <div style="flex:1">
+      <div class="uname" id="chat-name">-</div>
+      <div class="uemail" id="chat-email-label">-</div>
+    </div>
+    <div style="position:relative">
+      <button class="back-btn" onclick="toggleChatMenu(event)">⋮</button>
+      <div id="chat-menu" style="display:none;position:absolute;right:0;top:32px;background:var(--surface);border:1px solid var(--border);border-radius:8px;min-width:160px;z-index:10;overflow:hidden">
+        <div onclick="deleteChat()" style="padding:10px 14px;font-size:13px;cursor:pointer;color:var(--danger);transition:background .15s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'">🗑 delete chat for everyone</div>
       </div>
     </div>
-    <div class="chat-msgs" id="chat-msgs">
-      <div class="empty">no messages yet</div>
-    </div>
-    <div class="compose">
-      <input id="msg-input" placeholder="type a message…" onkeydown="if(event.key==='Enter')sendMsg()">
-      <button class="send-icon-btn" onclick="sendMsg()">↑</button>
-    </div>
   </div>
-
+  <div class="chat-msgs" id="chat-msgs">
+    <div class="empty">no messages yet</div>
+  </div>
+  <div class="compose">
+    <input id="msg-input" placeholder="type a message…" onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="send-icon-btn" onclick="sendMsg()">↑</button>
+  </div>
+</div>
   <!-- INBOX -->
   <div id="view-inbox" class="view">
     <h2>inbox</h2>
@@ -216,8 +221,13 @@
     el.innerHTML += `<div class="bubble received">${data.msg}</div>`;
     el.scrollTop = el.scrollHeight;
   }
-   }); 
 
+   }); 
+   socket.on('chatDeleted', ({ from }) => {
+  if (chatTarget === from) {
+    document.getElementById('chat-msgs').innerHTML = '<div class="empty">no messages yet</div>';
+  }
+});
 
 
 
@@ -374,6 +384,40 @@ function logout() {
       </div>
     `).join('');
   }
+
+
+
+
+
+
+  function toggleChatMenu(e) {
+  e.stopPropagation();
+  const menu = document.getElementById('chat-menu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+document.addEventListener('click', () => {
+  const menu = document.getElementById('chat-menu');
+  if (menu) menu.style.display = 'none';
+});
+
+async function deleteChat() {
+  if (!chatTarget) return;
+  if (!confirm('Delete this chat for everyone?')) return;
+  document.getElementById('chat-menu').style.display = 'none';
+
+  const res = await fetch(`/msg/${chatTarget}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+
+  if (res.ok) {
+    document.getElementById('chat-msgs').innerHTML = '<div class="empty">no messages yet</div>';
+    socket.emit('deleteChat', { to: chatTarget });
+  } else {
+    alert('failed to delete chat');
+  }
+}
 </script>
 
 </body>

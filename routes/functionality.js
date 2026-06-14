@@ -60,7 +60,23 @@ catch(err){
 }
 }); // see what msgs someone did to u 
 
+router.delete('/msg/:email', verifyToken, async (req, res) => {
+  try {
+    const me = req.user.email;
+    const other = req.params.email;
 
+    await Message.deleteMany({
+      $or: [
+        { userName: me, sendTo: other },
+        { userName: other, sendTo: me }
+      ]
+    });
+
+    res.status(200).json({ message: 'chat deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 

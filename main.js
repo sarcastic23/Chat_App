@@ -75,9 +75,15 @@ io.on('connection', (socket) => {
       }
     } catch (err) {
       console.log(err);
-    }
-  });
-
+  }
+ });
+ 
+  socket.on('deleteChat', ({ to }) => {
+   const receiverSocketId = connectedUsers[to];
+   if (receiverSocketId) {
+     io.to(receiverSocketId).emit('chatDeleted', { from: email });
+  }
+   });
   socket.on('disconnect', () => {
     delete connectedUsers[email];
     console.log(`${email} disconnected`);
